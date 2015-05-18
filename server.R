@@ -1,42 +1,22 @@
 library("shiny")
 source("fun_library.R")
-library("topGO")
-library("AnnotationDbi")
-library("GO.db")
-library("org.Hs.eg.db") # Annotated genome for Homo sapiens
-library("org.Rn.eg.db") # Annotated genome for Rattus norvegicus
-library("org.Ag.eg.db") #Anopheles
-library("org.At.tair.db") #Arabidopsis
-library("org.Bt.eg.db") # Bovine
-library("org.Ce.eg.db") # Worm
-library("org.Cf.eg.db") # Canine
-library("org.Dm.eg.db") #  Fly
-library("org.Dr.eg.db") # Zebrafish
-library("org.EcK12.eg.db") # E coli strain k12
-library("org.EcSakai.eg.db") # E coli strain Sakai
-library("org.Mm.eg.db") # Mouse
-library("org.Mmu.eg.db")  # Rhesus
-library("org.Pf.plasmo.db") # Malaria
-library("org.Pt.eg.db") # Chimp
-library("org.Sc.sgd.db") # Yeast
-library("org.Sco.eg.db") # Streptomyces coelicolor
-library("org.Ss.eg.db") # Pig
-library("org.Tgondii.eg.db") # Toxoplasma gondii
-library("org.Xl.eg.db") # Xenopus
+source("packages_load.R")
 
 shinyServer(function(input, output) {
-  
-  ###############################################
-  ##-------------------------------------------##
-  ##   R E A C T I V E   C O N D U C T O R S   ##
-  ##-------------------------------------------##
-  ###############################################
   
   observe({
     if (input$submit == 0)
       return()
     
     isolate({
+  
+      ###############################################
+      ##-------------------------------------------##
+      ##   R E A C T I V E   C O N D U C T O R S   ##
+      ##-------------------------------------------##
+      ###############################################
+  
+
       ##--------------------##
       ## MOLECULAR FUNCTION ##
       ##--------------------##
@@ -111,11 +91,13 @@ shinyServer(function(input, output) {
       ##--------------------##
       
       output$hist1MF <- renderPlot ({
-        hist(pValue(resultFishMF()), 50, xlab = "p-values")
+        hist(pValue(resultFishMF()), 50, main = "p-values for Classic Fisher enrichment test", 
+             xlab = "p-values", col = "skyblue", border = "white")
       })
       
       output$hist2MF <- renderPlot ({
-        hist(pValue(resultWeightMF()), 50, xlab = "p-values")
+        hist(pValue(resultWeightMF()), 50, main = "p-values for Weight Fisher enrichment test", 
+             xlab = "p-values", col = "skyblue", border = "white")
       })
       
        output$pvalueMF <- renderDataTable ({
@@ -130,16 +112,22 @@ shinyServer(function(input, output) {
          showSigOfNodes(GOhumanMF(), score(resultWeightMF()), firstSigNodes = 5, useInfo = "def")
       })
       
+#       output$downloadData <- downloadHandler(
+#         printGraph(GOdataMF(), resultWeightMF(), firstSigNodes = 10, resultFisMF(), fn.prefix = "tGO", useInfo = "def")
+#       )
+      
       ##--------------------##
       ## BIOLOGICAL PROCESS ##
       ##--------------------##
       
       output$hist1BP <- renderPlot ({
-        hist(pValue(resultFishBP()), 50, xlab = "p-values")
+        hist(pValue(resultFishBP()), 50, main = "p-values for Classic Fisher enrichment test", 
+             xlab = "p-values", col = "skyblue", border = "white")
       })
       
       output$hist2BP <- renderPlot ({
-        hist(pValue(resultWeightBP()), 50, xlab = "p-values")
+        hist(pValue(resultWeightBP()), 50, main = "p-values for Weight Fisher enrichment test", 
+             xlab = "p-values", col = "skyblue", border = "white")
       })
       
       output$pvalueBP <- renderDataTable ({
@@ -159,11 +147,13 @@ shinyServer(function(input, output) {
       ##--------------------##
       
       output$hist1CC <- renderPlot ({
-        hist(pValue(resultFishCC()), 50, xlab = "p-values")
+        hist(pValue(resultFishCC()), 50, main = "p-values for Classic Fisher enrichment test", 
+             xlab = "p-values", col = "skyblue", border = "white")
       })
       
       output$hist2CC <- renderPlot ({
-        hist(pValue(resultWeightCC()), 50, xlab = "p-values")
+        hist(pValue(resultWeightCC()), 50, main = "p-values for Weight Fisher enrichment test", 
+             xlab = "p-values", col = "skyblue", border = "white")
       })
       
       output$pvalueCC <- renderDataTable ({
