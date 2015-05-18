@@ -37,7 +37,7 @@ shinyUI(fluidPage(
         
         # Help and Usage
         tabPanel("Help",
-                 h1("Wellcome to enrichPFAM"),
+                 h1("Welcome to enrichPFAM"),
                  p("enrichPFAM is a web tool for performing Gene Ontology (GO) enrichment analysis.
                    It uses a PFAM ID as input, selects all human genes in the family and performs an enrichment test
                    against a selected organism."), 
@@ -71,12 +71,16 @@ shinyUI(fluidPage(
                     ),
                     tabPanel("Data table",
                              h2("Results Summary"),
-                            dataTableOutput("pvalueMF")
+                            dataTableOutput("pvalueMF"),
+                            downloadLink("downloadTableMF", "Download Table")
                     ),
                     tabPanel("GO Graphs",
-                            plotOutput("nodesallMF", width = 1000, height = 1500),
-                            #downloadLink('downloadData', 'Download'),
-                            plotOutput("nodesdefMF", width = 1000, height = 1500)
+                             h3("GO graph with classic enrichment analysis"),
+                            plotOutput("nodesallMF", height=1000),
+#                             downloadLink('downloadData1', 'Download Graph'),
+                            h3("GO graph with weight enrichment analysis"), 
+                            plotOutput("nodesdefMF", height=1000)
+#                             downloadLink('downloadData2', 'Download Graph')
                   )
                  )
         ),
@@ -89,11 +93,17 @@ shinyUI(fluidPage(
                             plotOutput("hist2BP", height = 600)
                             ),
                    tabPanel("Data table",
-                            dataTableOutput("pvalueBP")
+                            h2("Results Summary"),
+                            dataTableOutput("pvalueBP"),
+                            downloadLink("downloadTableBP", "Download Table")
                             ),
                    tabPanel("GO Graphs",
-                            plotOutput("nodesallBP"),
-                            plotOutput("nodesdefBP")
+                            h3("GO graph with classic enrichment analysis"),
+                            plotOutput("nodesallBP", height=1000),
+#                             downloadLink('downloadData3', 'Download Graph'),
+                            h3("GO graph with weight enrichment analysis"),
+                            plotOutput("nodesdefBP", height=1000)
+#                             downloadLink('downloadData4', 'Download Graph')
                             )
                    )
                 ),
@@ -102,15 +112,21 @@ shinyUI(fluidPage(
         tabPanel("Cellular Component",
                  tabsetPanel(
                    tabPanel("Histogram",
-                            plotOutput("hist1CC", height = 600),
-                            plotOutput("hist2CC", height = 600)
+                            plotOutput("hist1CC"),
+                            plotOutput("hist2CC")
                             ),
                    tabPanel("Data table",
-                            dataTableOutput("pvalueCC")
+                            h2("Results Summary"),
+                            dataTableOutput("pvalueCC"),
+                            downloadLink("downloadTableCC", "Download Table")
                             ),
                    tabPanel("GO Graphs",
-                            plotOutput("nodesallCC", height = 600),
-                            plotOutput("nodesdefCC", height = 600)
+                            h3("GO graph with classic enrichment analysis"),
+                            plotOutput("nodesallCC", height=1000),
+#                             downloadLink('downloadData5', 'Download Graph'),
+                            h3("GO graph with weight enrichment analysis"),
+                            plotOutput("nodesdefCC", height=1000)
+#                             downloadLink('downloadData6', 'Download Graph')
                             )
                    )
         )

@@ -35,7 +35,7 @@ shinyServer(function(input, output) {
       
       AllResMF <- reactive ({
         AllRes <- GenTable(GOhumanMF(), classic = resultFishMF(), weight = resultWeightMF(), 
-                           orderBy = "weight", ranksOf = "classic", topNodes = 20)
+                           orderBy = "weight", ranksOf = "classic", topNodes = 50)
       })
       
       ##--------------------##
@@ -105,15 +105,32 @@ shinyServer(function(input, output) {
        })
       
       output$nodesallMF <- renderPlot ({
-         showSigOfNodes(GOhumanMF(), score(resultFishMF()), firstSigNodes = 5, useInfo = "all")
+         showSigOfNodes(GOhumanMF(), score(resultFishMF()), firstSigNodes = 15, useInfo = "all", swPlot = TRUE)
       })
       
       output$nodesdefMF <- renderPlot ({
-         showSigOfNodes(GOhumanMF(), score(resultWeightMF()), firstSigNodes = 5, useInfo = "def")
+         showSigOfNodes(GOhumanMF(), score(resultWeightMF()), firstSigNodes = 15, useInfo = "def")
       })
       
-#       output$downloadData <- downloadHandler(
-#         printGraph(GOdataMF(), resultWeightMF(), firstSigNodes = 10, resultFisMF(), fn.prefix = "tGO", useInfo = "def")
+      output$downloadTableMF <- downloadHandler(
+        filename = "dataTable_MF.csv",
+        content <- function(file) {
+          write.csv(AllResMF(), file)
+        }
+      )
+      
+#        output$downloadData1 <- downloadHandler(
+#          filename = "nodes_all",
+#          content  <- function (file) {
+#            file.copy(printNodes(GOhumanMF(), resultWeightMF(), "tGO_MF", "all"), file)
+#          }
+#        )
+#       
+#       output$downloadData2 <- downloadHandler(
+#         filename = "nodes_def",
+#         content  <- function (file) {
+#           printNodes(GOhumanMF(), resultWeightMF(), "def")
+#         }
 #       )
       
       ##--------------------##
@@ -135,12 +152,33 @@ shinyServer(function(input, output) {
       })
       
       output$nodesallBP <- renderPlot ({
-        showSigOfNodes(GOhumanBP(), score(resultFishBP()), firstSigNodes = 5, useInfo = "all")
+        showSigOfNodes(GOhumanBP(), score(resultFishBP()), firstSigNodes = 15, useInfo = "all")
       })
       
       output$nodesdefBP <- renderPlot ({
-        showSigOfNodes(GOhumanBP(), score(resultWeightBP()), firstSigNodes = 5, useInfo = "def")
+        showSigOfNodes(GOhumanBP(), score(resultWeightBP()), firstSigNodes = 15, useInfo = "def")
       })
+      
+      output$downloadTableBP <- downloadHandler(
+        filename = "dataTable_BP.csv",
+        content <- function(file) {
+          write.csv(AllResBP(), file)
+        }
+      )
+    
+#       output$downloadData3 <- downloadHandler(
+#         filename = "nodes_all",
+#         content  <- function (file) {
+#           printNodes(GOhumanBP(), resultFishBP(), "tGO_BP", "all")
+#         }
+#       )
+#       
+#       output$downloadData4 <- downloadHandler(
+#         filename = "nodes_def",
+#         content  <- function (file) {
+#           printNodes(GOhumanBP(), resultWeightBP(), "tGO_BP", "def")
+#         }
+#       )
       
       ##--------------------##
       ## CELLULAR COMPONENT ##
@@ -161,12 +199,33 @@ shinyServer(function(input, output) {
       })
       
       output$nodesallCC <- renderPlot ({
-        showSigOfNodes(GOhumanCC(), score(resultFishCC()), firstSigNodes = 5, useInfo = "all")
+        showSigOfNodes(GOhumanCC(), score(resultFishCC()), firstSigNodes = 15, useInfo = "all")
       })
       
       output$nodesdefCC <- renderPlot ({
-        showSigOfNodes(GOhumanCC(), score(resultWeightCC()), firstSigNodes = 5, useInfo = "def")
+        showSigOfNodes(GOhumanCC(), score(resultWeightCC()), firstSigNodes = 15, useInfo = "def")
       })
+
+      output$downloadTableCC <- downloadHandler(
+        filename = "dataTable_CC.csv",
+        content <- function(file) {
+          write.csv(AllResCC(), file)
+        }
+      )
+      
+#       output$downloadData5 <- downloadHandler(
+#         filename = "nodes_all",
+#         content  <- function (file) {
+#           printNodes(GOhumanMF(), resultFishMF(), "tGO_CC", "all")
+#         }
+#       )
+#       
+#       output$downloadData6 <- downloadHandler(
+#         filename = "nodes_def",
+#         content  <- function (file) {
+#           printNodes(GOhumanCC(), resultWeightCC(), "tGO_CC", "def")
+#         }
+#       )
     })
   })
   
